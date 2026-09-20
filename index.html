@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dory 職涯諮詢師 ✦ 陪你走出職場迷惘，找到閃耀定位</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FBFBF9',
+                            card: '#FFFFFF',
+                            text: '#1A1A1A',
+                            muted: '#555555',
+                            lightMuted: '#71717A',
+                            accent: '#D97706', // warm amber/earth
+                            accentLight: '#FEF3C7',
+                            sand: '#F3EFE6',
+                            border: 'rgba(26, 26, 26, 0.08)',
+                            primary: '#2C2C2C',
+                            primaryHover: '#111111',
+                            lineGreen: '#06C755'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 12px -2px rgba(0, 0, 0, 0.025)',
+                        'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 6px 15px -4px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FBFBF9;
+            color: #1A1A1A;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .sparkle-badge {
+            background: linear-gradient(135deg, #F3EFE6 0%, #E8E2D5 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #2C2C2C 30%, #B45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Smooth Accordion Animations */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease;
+            opacity: 0;
+        }
+        .faq-item.active .faq-content {
+            max-height: 300px;
+            opacity: 1;
+            padding-top: 1rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Glassmorphism nav */
+        .glass-nav {
+            background: rgba(251, 251, 249, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-100 selection:text-amber-900">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-black/5 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-stone-900 text-white flex items-center justify-center font-semibold text-lg group-hover:bg-amber-700 transition-colors">
+                    D
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-tight text-brand-text flex items-center gap-1">
+                        Dory <span class="text-amber-600 text-xs">✦</span>
+                    </span>
+                    <span class="text-xs text-brand-muted tracking-wider">職涯諮詢師</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-brand-muted">
+                <a href="#about" class="hover:text-brand-text transition-colors">關於我</a>
+                <a href="#services" class="hover:text-brand-text transition-colors">服務項目</a>
+                <a href="#process" class="hover:text-brand-text transition-colors">諮詢流程</a>
+                <a href="#testimonials" class="hover:text-brand-text transition-colors">學員評價</a>
+                <a href="#faq" class="hover:text-brand-text transition-colors">常見問題</a>
+            </nav>
+
+            <!-- CTA Button Desktop -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#contact" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-medium bg-brand-primary text-white hover:bg-brand-primaryHover transition-all shadow-sm hover:shadow">
+                    預約免費初診
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-brand-text focus:outline-none" aria-label="切換選單">
+                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-bg border-b border-black/5 px-6 py-6 transition-all">
+            <nav class="flex flex-col gap-4 text-base font-medium text-brand-muted">
+                <a href="#about" class="mobile-nav-link py-2 border-b border-black/5">關於我</a>
+                <a href="#services" class="mobile-nav-link py-2 border-b border-black/5">服務項目</a>
+                <a href="#process" class="mobile-nav-link py-2 border-b border-black/5">諮詢流程</a>
+                <a href="#testimonials" class="mobile-nav-link py-2 border-b border-black/5">學員評價</a>
+                <a href="#faq" class="mobile-nav-link py-2 border-b border-black/5">常見問題</a>
+                <a href="#contact" class="mobile-nav-link mt-2 w-full text-center py-3 rounded-full bg-brand-primary text-white font-medium">預約免費初診 ✦</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- 1. Hero Section -->
+        <section class="relative min-h-[85vh] flex items-center justify-center py-16 md:py-24 overflow-hidden">
+            <!-- Background Decorative Glows -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-100/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+            <div class="absolute bottom-10 right-10 w-[300px] h-[300px] bg-orange-100/30 rounded-full blur-2xl pointer-events-none -z-10"></div>
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                    
+                    <!-- Left Hero Text Content -->
+                    <div class="lg:col-span-7 flex flex-col items-start space-y-6 text-left">
+                        <!-- Badge Tag -->
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full sparkle-badge text-amber-900 border border-amber-200/50 text-xs sm:text-sm font-medium">
+                            <span class="text-amber-600">✦</span>
+                            <span>18-35 歲職涯迷惘首選 ‧ 職涯牌卡引導</span>
+                        </div>
+
+                        <!-- Main Headline -->
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight text-brand-text leading-[1.25]">
+                            陪你走出職場迷惘，<br class="hidden sm:inline">
+                            找到<span class="gradient-text">閃耀的個人定位</span> ✦
+                        </h1>
+
+                        <!-- Subtitle -->
+                        <p class="text-base sm:text-lg text-brand-muted max-w-2xl leading-relaxed font-normal">
+                            不再漫無目的地換工作。透過專業職涯牌卡盤點優勢與熱情，協助你克服轉職焦慮，建立具體的職涯行動計畫，重拾工作中的主導權與成就感。
+                        </p>
+
+                        <!-- Highlights Quick Badges -->
+                        <div class="flex flex-wrap gap-2 sm:gap-3 pt-1">
+                            <span class="px-3 py-1 rounded-md bg-stone-200/60 text-xs font-medium text-stone-700">18-35歲轉職準備</span>
+                            <span class="px-3 py-1 rounded-md bg-stone-200/60 text-xs font-medium text-stone-700">職能與熱情盤點</span>
+                            <span class="px-3 py-1 rounded-md bg-stone-200/60 text-xs font-medium text-stone-700">牌卡深度對話</span>
+                            <span class="px-3 py-1 rounded-md bg-stone-200/60 text-xs font-medium text-stone-700">轉職心理建設</span>
+                        </div>
+
+                        <!-- Hero CTA Buttons -->
+                        <div class="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                            <a href="#contact" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-base font-semibold bg-brand-primary text-white hover:bg-brand-primaryHover transition-all shadow-md hover:shadow-lg text-center gap-2 group">
+                                <span>預約 15 分鐘免費初診</span>
+                                <span class="group-hover:translate-x-1 transition-transform">→</span>
+                            </a>
+                            <a href="#services" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-base font-medium bg-white text-brand-text border border-stone-200 hover:bg-stone-50 transition-all text-center">
+                                探索服務項目
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Visual / Portrait Card -->
+                    <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                        <div class="relative w-full max-w-md">
+                            <div class="absolute -inset-2 bg-gradient-to-tr from-amber-200 to-stone-200 rounded-3xl blur-sm opacity-70 transform rotate-1"></div>
+                            
+                            <div class="relative bg-white p-4 rounded-3xl border border-stone-200 shadow-soft overflow-hidden">
+                                <div class="relative aspect-[4/5] rounded-2xl overflow-hidden bg-stone-100 flex items-center justify-center">
+                                    <svg class="w-full h-full object-cover" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="400" height="500" fill="#FAF6F0"/>
+                                        <circle cx="200" cy="180" r="80" fill="#E8D5C4"/>
+                                        <path d="M120 380C120 290 150 260 200 260C250 260 280 290 280 380V500H120V380Z" fill="#D4A373"/>
+                                        <rect x="250" y="300" width="80" height="110" rx="8" transform="rotate(-12 250 300)" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+                                        <circle cx="280" cy="340" r="12" fill="#FEF3C7"/>
+                                        <text x="272" y="345" font-size="14" fill="#D97706">✦</text>
+                                        <rect x="230" y="320" width="80" height="110" rx="8" transform="rotate(8 230 320)" fill="#2C2C2C"/>
+                                        <text x="262" y="375" font-size="12" fill="#FFFFFF" font-family="sans-serif">Dory</text>
+                                    </svg>
+                                    <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3.5 rounded-xl border border-stone-200/80 shadow-sm flex items-center justify-between">
+                                        <div>
+                                            <p class="text-xs text-brand-muted font-medium">陪伴過 100+ 位學員</p>
+                                            <p class="text-sm font-bold text-brand-text">理清思緒 ✦ 重拾信心</p>
+                                        </div>
+                                        <div class="flex -space-x-1">
+                                            <span class="inline-block w-6 h-6 rounded-full bg-amber-200 border-2 border-white text-[10px] flex items-center justify-center font-bold text-amber-800">★</span>
+                                            <span class="inline-block w-6 h-6 rounded-full bg-stone-300 border-2 border-white text-[10px] flex items-center justify-center font-bold text-stone-700">★</span>
+                                            <span class="inline-block w-6 h-6 rounded-full bg-orange-200 border-2 border-white text-[10px] flex items-center justify-center font-bold text-orange-800">★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Section (關於我) -->
+        <section id="about" class="py-20 bg-white border-y border-stone-200/60">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Left Column: Story Bio -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-semibold tracking-wide">
+                            <span>✦</span> ABOUT DORY
+                        </div>
+
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-text tracking-tight leading-snug">
+                            「理解職場的多元樣貌，<br>陪伴你找到最自在的發光姿態。」
+                        </h2>
+
+                        <div class="space-y-4 text-brand-muted text-base leading-relaxed">
+                            <p>
+                                你好，我是 <strong>Dory</strong>。我的過往職涯橫跨<strong>新創、電商、日商零售與行銷產業</strong>，也曾任職活動企劃、業務、門市店長及人資營運。
+                            </p>
+                            <p>
+                                透過多元跨域的歷練，讓我能從不同專業與管理視角理解職場的多元樣貌，同時從<strong>雇主/面試官</strong>與<strong>求職者</strong>雙邊切角給予最貼近真實職場的協助。
+                            </p>
+                            <p>
+                                職涯不該只有一種標準答案。我致力於透過<strong>職涯牌卡與諮商技巧</strong>，帶你系統化整理混亂的思緒，看見自己沒發現的亮點，陪伴你勇敢走出一條屬於自己的職涯路。
+                            </p>
+                        </div>
+
+                        <!-- Core Features / Pillars -->
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 rounded-2xl bg-brand-bg border border-stone-200/70">
+                                <span class="text-xl">🌐</span>
+                                <h3 class="font-bold text-brand-text mt-2 text-sm">跨域視野</h3>
+                                <p class="text-xs text-brand-muted mt-1">橫跨新創、電商、日商與人資經驗</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-brand-bg border border-stone-200/70">
+                                <span class="text-xl">🃏</span>
+                                <h3 class="font-bold text-brand-text mt-2 text-sm">牌卡引導</h3>
+                                <p class="text-xs text-brand-muted mt-1">具體化隱性價值觀與潛在優勢</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-brand-bg border border-stone-200/70">
+                                <span class="text-xl">🤝</span>
+                                <h3 class="font-bold text-brand-text mt-2 text-sm">溫暖傾聽</h3>
+                                <p class="text-xs text-brand-muted mt-1">無壓力的陪伴，減緩轉職焦慮</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-brand-bg border border-stone-200/70">
+                                <span class="text-xl">🎯</span>
+                                <h3 class="font-bold text-brand-text mt-2 text-sm">實戰導向</h3>
+                                <p class="text-xs text-brand-muted mt-1">提供可立即執行的具體行動方案</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Career Background Timeline -->
+                    <div class="lg:col-span-6">
+                        <div class="bg-brand-bg rounded-3xl p-6 sm:p-8 border border-stone-200/80 space-y-6">
+                            <!-- MUST use "多元跨領域職涯軌跡" -->
+                            <h3 class="text-xl font-bold text-brand-text flex items-center gap-2">
+                                <span>✦</span> 多元跨領域職涯軌跡
+                            </h3>
+
+                            <div class="relative border-l-2 border-stone-300/60 ml-3 space-y-6 pl-6 text-sm">
+                                <!-- Exp 1 -->
+                                <div class="relative">
+                                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-amber-600 border-4 border-white"></div>
+                                    <span class="text-xs font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">人資營運 & 選才切角</span>
+                                    <h4 class="font-bold text-brand-text text-base mt-1">HR Operations & Talent Acquisition</h4>
+                                    <p class="text-brand-muted mt-1 text-xs sm:text-sm">熟知企業招募邏輯、履歷篩選機制與面試評估標準，幫你站在雇主視角優化求職策略。</p>
+                                </div>
+
+                                <!-- Exp 2 -->
+                                <div class="relative">
+                                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-stone-400 border-4 border-white"></div>
+                                    <span class="text-xs font-semibold text-stone-700 bg-stone-200 px-2 py-0.5 rounded">日商零售 & 門市店長</span>
+                                    <h4 class="font-bold text-brand-text text-base mt-1">Retail Management & Operations</h4>
+                                    <p class="text-brand-muted mt-1 text-xs sm:text-sm">具備團隊管理、人員溝通及高標準服務流程經驗，理解服務業與零售業轉職痛點。</p>
+                                </div>
+
+                                <!-- Exp 3 -->
+                                <div class="relative">
+                                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-stone-400 border-4 border-white"></div>
+                                    <span class="text-xs font-semibold text-stone-700 bg-stone-200 px-2 py-0.5 rounded">新創 / 電商 / 行銷企劃 & 業務</span>
+                                    <h4 class="font-bold text-brand-text text-base mt-1">Marketing, Sales & Event Planning</h4>
+                                    <p class="text-brand-muted mt-1 text-xs sm:text-sm">熟悉快速變動的職場環境、跨部門溝通與專案執行，協助跨領域求職者梳理可遷移技能。</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-white rounded-2xl border border-stone-200 text-xs text-stone-600 flex items-center gap-3">
+                                <span class="text-2xl">💡</span>
+                                <div>
+                                    <span class="font-bold text-brand-text">為什麼這對你有幫助？</span><br>
+                                    我不只給予溫暖的心靈支持，更能為你提供貼近產業現實的具體求職建議。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. Services Section (服務項目) -->
+        <section id="services" class="py-20 bg-brand-bg">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/60 text-amber-900 text-xs font-semibold">
+                        <span>✦</span> SERVICES
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-text tracking-tight">客製化職涯諮詢服務</h2>
+                    <p class="text-brand-muted text-sm sm:text-base">針對不同階段的迷惘與求職需求，提供最適合你的專屬方案</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Service Card 1 -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft hover:shadow-hover transition-all duration-300 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900">熱門首選 ✦</span>
+                                <span class="text-xs text-brand-lightMuted">60 mins / 次</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-amber-800 transition-colors">一對一深度職涯諮詢</h3>
+                            <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+                                針對當前職涯迷惘、轉職瓶頸、人際衝突或未來選擇進行全方位梳理，找回內心秩序。
+                            </p>
+                            <ul class="space-y-3 text-sm text-stone-700 mb-8 border-t border-stone-100 pt-6">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>現況困境剖析與核心問題釐清</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>轉職心態建設與焦慮緩解策略</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>產出下一步可執行的具體行動計畫</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-brand-muted block">單次諮詢體驗</span>
+                                <span class="text-2xl font-bold text-brand-text">NT$ 2,200</span>
+                            </div>
+                            <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-primary text-white text-sm font-medium hover:bg-brand-primaryHover transition-colors">
+                                立即預約
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft hover:shadow-hover transition-all duration-300 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-900">牌卡引導 ✦</span>
+                                <span class="text-xs text-brand-lightMuted">90 mins / 次</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-amber-800 transition-colors">熱情與價值觀探索 (牌卡體驗)</h3>
+                            <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+                                運用專業職涯牌卡，將抽象的價值觀、特質與理想工作環境「具體化」與「排序」。
+                            </p>
+                            <ul class="space-y-3 text-sm text-stone-700 mb-8 border-t border-stone-100 pt-6">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>職涯牌卡（價值觀 / 能力 / 興趣）實體或線上引導</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>盤點隱性優勢與核心驅動力</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>建立專屬你的職涯篩選指標清單</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-brand-muted block">牌卡探索專案</span>
+                                <span class="text-2xl font-bold text-brand-text">NT$ 2,800</span>
+                            </div>
+                            <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-primary text-white text-sm font-medium hover:bg-brand-primaryHover transition-colors">
+                                立即預約
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft hover:shadow-hover transition-all duration-300 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-800">求職必備 ✦</span>
+                                <span class="text-xs text-brand-lightMuted">精修 1 份履歷 + 線上解說</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-amber-800 transition-colors">優勢履歷健診與亮點重塑</h3>
+                            <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+                                從人資與面試官角度切入，將零碎經歷轉化為數據與成果，大幅提升面試邀約率。
+                            </p>
+                            <ul class="space-y-3 text-sm text-stone-700 mb-8 border-t border-stone-100 pt-6">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>履歷架構調整與文案文字優化</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>提煉跨領域可遷移技能 (Transferable Skills)</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>30 mins 線上履歷修改建議對接</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-brand-muted block">履歷重塑服務</span>
+                                <span class="text-2xl font-bold text-brand-text">NT$ 1,800</span>
+                            </div>
+                            <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-primary text-white text-sm font-medium hover:bg-brand-primaryHover transition-colors">
+                                立即預約
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 4 -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft hover:shadow-hover transition-all duration-300 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-800">高階演練 ✦</span>
+                                <span class="text-xs text-brand-lightMuted">60 mins 實戰演練</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-amber-800 transition-colors">模擬面試與提問策略</h3>
+                            <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+                                擬真面試情境演練，教你如何應對難題，並透過高質量提問判斷公司文化與團隊運作。
+                            </p>
+                            <ul class="space-y-3 text-sm text-stone-700 mb-8 border-t border-stone-100 pt-6">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>擬真面試問題抽問與回答架構梳理</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>反向提問策略（幫助你反向評估公司）</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-amber-600 font-bold">✓</span>
+                                    <span>現場即時 Feedback 與優化方向建議</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-brand-muted block">擬真面試演練</span>
+                                <span class="text-2xl font-bold text-brand-text">NT$ 2,000</span>
+                            </div>
+                            <a href="#contact" class="px-5 py-2.5 rounded-full bg-brand-primary text-white text-sm font-medium hover:bg-brand-primaryHover transition-colors">
+                                立即預約
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. Process Section (諮詢流程) -->
+        <section id="process" class="py-20 bg-white border-y border-stone-200/60">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-semibold">
+                        <span>✦</span> PROCESS
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-text tracking-tight">清晰流暢的 4 步諮詢流程</h2>
+                    <p class="text-brand-muted text-sm sm:text-base">從初次接觸到落地執行，無壓力、系統化地帶你走向下一階段</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    
+                    <!-- Step 1 -->
+                    <div class="bg-brand-bg rounded-2xl p-6 border border-stone-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm mb-4">
+                                01
+                            </div>
+                            <h3 class="font-bold text-lg text-brand-text mb-2">線上預約與填寫表單</h3>
+                            <p class="text-xs text-brand-muted leading-relaxed">
+                                選擇方便時間，簡述當前面臨的職涯狀態與期待，幫助 Dory 事先為你準備專屬諮詢資料。
+                            </p>
+                        </div>
+                        <span class="text-xs font-semibold text-amber-800 mt-6 inline-block">步驟 01 ✦</span>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-brand-bg rounded-2xl p-6 border border-stone-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm mb-4">
+                                02
+                            </div>
+                            <h3 class="font-bold text-lg text-brand-text mb-2">牌卡與深度引導對話</h3>
+                            <p class="text-xs text-brand-muted leading-relaxed">
+                                進行 1 對 1 線上或實體諮詢，透過牌卡釐清隱性價值觀與思緒，精準定位問題關鍵。
+                            </p>
+                        </div>
+                        <span class="text-xs font-semibold text-amber-800 mt-6 inline-block">步驟 02 ✦</span>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-brand-bg rounded-2xl p-6 border border-stone-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm mb-4">
+                                03
+                            </div>
+                            <h3 class="font-bold text-lg text-brand-text mb-2">定位優勢與行動計畫</h3>
+                            <p class="text-xs text-brand-muted leading-relaxed">
+                                共同梳理出清晰的優勢地圖，並擬定可落地、分階段執行的求職或轉職行動 Roadmap。
+                            </p>
+                        </div>
+                        <span class="text-xs font-semibold text-amber-800 mt-6 inline-block">步驟 03 ✦</span>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-brand-bg rounded-2xl p-6 border border-stone-200/70 relative flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm mb-4">
+                                04
+                            </div>
+                            <h3 class="font-bold text-lg text-brand-text mb-2">心態建設與後續追蹤</h3>
+                            <p class="text-xs text-brand-muted leading-relaxed">
+                                提供求職焦慮輔導與心態建立，並於諮詢後提供重點摘要與輔助資源工具推薦。
+                            </p>
+                        </div>
+                        <span class="text-xs font-semibold text-amber-800 mt-6 inline-block">步驟 04 ✦</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Trust Section (客戶推薦 & FAQ) -->
+        <section id="testimonials" class="py-20 bg-brand-bg">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Header -->
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/60 text-amber-900 text-xs font-semibold">
+                        <span>✦</span> TESTIMONIALS
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-brand-text tracking-tight">真實學員的心得分享</h2>
+                    <p class="text-brand-muted text-sm sm:text-base">看看其他學員如何透過諮詢，釐清思緒並找到未來的方向</p>
+                </div>
+
+                <!-- Testimonials Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                    
+                    <!-- Review 1: Software Engineer -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft flex flex-col justify-between relative">
+                        <div>
+                            <div class="flex text-amber-500 gap-1 text-sm mb-4">
+                                ★★★★★
+                            </div>
+                            <p class="text-sm font-semibold text-brand-text mb-3 leading-snug">
+                                「不僅溫暖也非常專業，整體下來非常舒服！」
+                            </p>
+                            <p class="text-xs sm:text-sm text-brand-muted leading-relaxed mb-6">
+                                藉由職涯諮詢了解自己的特質個性，適合哪類型的工作，也不侷限目前的工作環境，未來也許也可以試試 PM 或科技業 HR 角色。Dory 每次諮詢前，都會認真準備資料，以及過程中時刻注意狀態，並引導性的分析以及分享，同時也會建議相關輔助工具。可以多多利用身邊的資源，不僅溫暖也非常專業！
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-text">匿名學員</h4>
+                                <span class="text-xs text-brand-lightMuted">軟體業 / 工程師</span>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-stone-100 text-[11px] text-stone-600 font-medium">轉職探索</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 2: Marketing -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft flex flex-col justify-between relative">
+                        <div>
+                            <div class="flex text-amber-500 gap-1 text-sm mb-4">
+                                ★★★★★
+                            </div>
+                            <p class="text-sm font-semibold text-brand-text mb-3 leading-snug">
+                                「將腦袋混亂的資訊有序釐清，人好開朗又親切！」
+                            </p>
+                            <p class="text-xs sm:text-sm text-brand-muted leading-relaxed mb-6">
+                                透過牌卡工具將價值觀、觀念、追求的理想，具體化並做出排序，將腦袋混亂的資訊有序釐清，更認識自己，幫助理解個人狀態與目標方向。謝謝 Dory，人好開朗又親切！一步步帶著我釐清混亂的思緒，點出更多發展可能與亮點，並給予實質建議與鼓勵～
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-text">匿名學員</h4>
+                                <span class="text-xs text-brand-lightMuted">美妝品牌 / 行銷</span>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-medium">牌卡體驗</span>
+                        </div>
+                    </div>
+
+                    <!-- Review 3: Visual Designer -->
+                    <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-soft flex flex-col justify-between relative">
+                        <div>
+                            <div class="flex text-amber-500 gap-1 text-sm mb-4">
+                                ★★★★★
+                            </div>
+                            <p class="text-sm font-semibold text-brand-text mb-3 leading-snug">
+                                「將求職這件事系統化，在焦慮時給出很好的建議！」
+                            </p>
+                            <p class="text-xs sm:text-sm text-brand-muted leading-relaxed mb-6">
+                                Dory 同時從面試官與求職者雙邊切角提供建議，並分享如何透過提問，更了解公司的文化與運作方式。最有幫助的是她將求職這件事系統化，在諮詢過程中，讓我更了解自己的個性與適合的工作環境，有效地找到未來的方向！一直很有耐心的聆聽，在我擔憂及焦慮時，都能給出很好的建議！
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-text">匿名學員</h4>
+                                <span class="text-xs text-brand-lightMuted">視覺設計師</span>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-stone-100 text-stone-600 text-[11px] font-medium">求職準備</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FAQ Accordion Subsection -->
+                <div id="faq" class="max-w-3xl mx-auto pt-8">
+                    <div class="text-center mb-10">
+                        <h3 class="text-2xl font-bold text-brand-text">常見問題 FAQ</h3>
+                        <p class="text-xs text-brand-muted mt-1">解答你在預約前的疑慮與好奇</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="faq-item bg-white rounded-2xl border border-stone-200/80 p-5 cursor-pointer transition-all" onclick="toggleFaq(this)">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-sm sm:text-base text-brand-text">諮詢前我需要準備什麼資料嗎？</h4>
+                                <span class="faq-icon text-amber-700 font-bold text-xl transition-transform duration-300">+</span>
+                            </div>
+                            <div class="faq-content text-xs sm:text-sm text-brand-muted leading-relaxed">
+                                預約成功後，我們會提供一份簡單的預約表單。你可以附上現有的履歷（若有）或簡單說明你目前遇到的問題。不用擔心準備不夠完善，帶著放鬆的心情前來即可！
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-2xl border border-stone-200/80 p-5 cursor-pointer transition-all" onclick="toggleFaq(this)">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-sm sm:text-base text-brand-text">牌卡諮詢是如何進行的？線上也可以體驗嗎？</h4>
+                                <span class="faq-icon text-amber-700 font-bold text-xl transition-transform duration-300">+</span>
+                            </div>
+                            <div class="faq-content text-xs sm:text-sm text-brand-muted leading-relaxed">
+                                可以的！實體諮詢會使用實體職涯牌卡；線上諮詢則使用專屬的線上互動牌卡工具。透過牌卡排序與主題引導，能協助你將大腦中模糊的感受轉化為清晰的關鍵字與優先順序。
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-2xl border border-stone-200/80 p-5 cursor-pointer transition-all" onclick="toggleFaq(this)">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-sm sm:text-base text-brand-text">我完全不知道自己想做什麼，這樣適合做諮詢嗎？</h4>
+                                <span class="faq-icon text-amber-700 font-bold text-xl transition-transform duration-300">+</span>
+                            </div>
+                            <div class="faq-content text-xs sm:text-sm text-brand-muted leading-relaxed">
+                                這非常適合！許多學員都是在「完全沒有頭緒」的狀態下來找 Dory。諮詢的目的就是幫你從過往經歷、特質與價值觀中抽絲剝繭，找到原本被忽視的潛力與方向。
+                            </div>
+                        </div>
+
+                        <div class="faq-item bg-white rounded-2xl border border-stone-200/80 p-5 cursor-pointer transition-all" onclick="toggleFaq(this)">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-sm sm:text-base text-brand-text">諮詢形式是實體還是線上？</h4>
+                                <span class="faq-icon text-amber-700 font-bold text-xl transition-transform duration-300">+</span>
+                            </div>
+                            <div class="faq-content text-xs sm:text-sm text-brand-muted leading-relaxed">
+                                主要提供 Google Meet 線上視訊諮詢（彈性且不受地區限制）；若在台北地區且有實體對談需求，也可於預約時提出討論配合的咖啡廳地點。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. Contact Section (聯絡方式) -->
+        <section id="contact" class="py-20 bg-white border-t border-stone-200/60">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="bg-gradient-to-br from-stone-900 to-stone-800 rounded-3xl p-8 sm:p-12 lg:p-16 text-white relative overflow-hidden shadow-xl">
+                    <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-amber-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+                        
+                        <!-- Left Info -->
+                        <div class="lg:col-span-6 space-y-6">
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-amber-200 text-xs font-semibold backdrop-blur-sm">
+                                <span>✦</span> READY TO START?
+                            </div>
+
+                            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
+                                準備好開啟你的<br>下一步職涯可能性了嗎？
+                            </h2>
+
+                            <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+                                不必一個人獨自焦慮。歡迎預約 15 分鐘免費初診對談，或是透過 LINE、Email 或 IG 訊息與我聊聊你的現況。
+                            </p>
+
+                            <!-- Direct Contact Badges including Line ID @907exjoz -->
+                            <div class="space-y-4 pt-2">
+                                <div class="flex items-center gap-3 text-sm text-stone-200">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-base">
+                                        LINE
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-stone-400 block">LINE 官方帳號</span>
+                                        <span class="font-medium hover:text-emerald-300 transition-colors cursor-pointer select-all">@907exjoz</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-sm text-stone-200">
+                                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber-300 text-base">
+                                        ✉️
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-stone-400 block">Email 諮詢信箱</span>
+                                        <a href="mailto:dory.lifeplayer@gmail.com" class="font-medium hover:text-amber-300 transition-colors">dory.lifeplayer@gmail.com</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-sm text-stone-200">
+                                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber-300 text-base">
+                                        📸
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-stone-400 block">Instagram 個人品牌</span>
+                                        <a href="https://instagram.com/dory.lifeplayer" target="_blank" rel="noopener noreferrer" class="font-medium hover:text-amber-300 transition-colors">@dory.lifeplayer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Quick Contact Form Card -->
+                        <div class="lg:col-span-6">
+                            <form id="booking-form" class="bg-white text-brand-text p-6 sm:p-8 rounded-2xl shadow-lg space-y-4">
+                                <h3 class="font-bold text-lg border-b border-stone-100 pb-3 flex items-center justify-between">
+                                    <span>預約諮詢 / 快速體驗</span>
+                                    <span class="text-xs font-normal text-amber-800 bg-amber-50 px-2 py-0.5 rounded">免卡號預約</span>
+                                </h3>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-brand-muted mb-1">您的姓名 / 稱呼</label>
+                                    <input type="text" required placeholder="例：Alex Lin" class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-brand-muted mb-1">電子信箱 Email 或 LINE ID</label>
+                                    <input type="text" required placeholder="example@gmail.com 或 LINE ID" class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-brand-muted mb-1">希望諮詢的項目</label>
+                                    <select class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40 bg-white">
+                                        <option>預約 15 分鐘免費初診對談</option>
+                                        <option>一對一深度職涯諮詢</option>
+                                        <option>熱情與價值觀探索 (牌卡體驗)</option>
+                                        <option>優勢履歷健診與亮點重塑</option>
+                                        <option>模擬面試與提問策略</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-brand-muted mb-1">簡述您目前的職場痛點或想法</label>
+                                    <textarea rows="3" placeholder="例如：想轉職做行銷但不知道從何準備..." class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-3.5 rounded-xl bg-brand-primary text-white font-medium text-sm hover:bg-brand-primaryHover transition-all shadow hover:shadow-md flex items-center justify-center gap-2">
+                                    <span>送出預約申請</span>
+                                    <span>✦</span>
+                                </button>
+
+                                <p class="text-[11px] text-stone-400 text-center">
+                                    送出後 Dory 將於 24 小時內親自與您聯繫對接時間。
+                                </p>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-bg py-8 border-t border-stone-200/60 text-xs text-brand-muted">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-brand-text">Dory 職涯諮詢 ✦</span>
+                <span>© 2026 Dory. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span class="text-emerald-700 font-medium">LINE: @907exjoz</span>
+                <a href="mailto:dory.lifeplayer@gmail.com" class="hover:text-brand-text transition-colors">dory.lifeplayer@gmail.com</a>
+                <a href="https://instagram.com/dory.lifeplayer" target="_blank" class="hover:text-brand-text transition-colors">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Mobile Booking Button -->
+    <div class="md:hidden fixed bottom-5 right-5 z-40">
+        <a href="#contact" class="flex items-center gap-2 px-5 py-3 rounded-full bg-brand-primary text-white text-xs font-bold shadow-lg hover:bg-brand-primaryHover transition-all">
+            <span>預約初診</span>
+            <span>✦</span>
+        </a>
+    </div>
+
+    <!-- Success Modal Notification -->
+    <div id="modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 transform scale-95 transition-transform duration-300">
+            <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                ✓
+            </div>
+            <h3 class="text-xl font-bold text-brand-text">預約申請已成功送出！</h3>
+            <p class="text-xs text-brand-muted leading-relaxed">
+                謝謝你的信任！Dory 已經收到你的訊息，會在 24 小時內主動聯繫你。
+            </p>
+            <button onclick="closeModal()" class="w-full py-2.5 rounded-full bg-brand-primary text-white text-sm font-medium">
+                好的，我知道了
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // FAQ Accordion Toggle
+        function toggleFaq(element) {
+            const isActive = element.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // Mobile Navigation Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIconOpen.classList.add('hidden');
+                menuIconClose.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            }
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+        // Interactive Form Simulation & Modal
+        const bookingForm = document.getElementById('booking-form');
+        const modal = document.getElementById('modal');
+
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+            bookingForm.reset();
+        });
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
